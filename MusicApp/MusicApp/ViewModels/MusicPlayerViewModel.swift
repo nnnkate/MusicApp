@@ -10,8 +10,7 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 
-final class MusicPlayerViewModel {
-    
+final class MusicPlayerViewModel: NSObject {
     var audioPlayer: AVAudioPlayer?
     var currentAudioPath: URL?
     
@@ -28,8 +27,45 @@ final class MusicPlayerViewModel {
                                    imageName: "album_motley_crue",
                                    artist: [Artist(name: "Mötley Crüe")])]
     
+   
+}
+
+extension MusicPlayerViewModel: AVAudioPlayerDelegate {
     func setCurrentAudioPath(index: Int) {
         currentAudioPath = URL(fileURLWithPath: Bundle.main.path(forResource: songsData?[index].fileName, ofType: "mp3") ?? "")
         print("\(String(describing: currentAudioPath))")
     }
+    
+    func prepareAudio(index: Int) {
+        setCurrentAudioPath(index: index)
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)))
+        } catch {
+        }
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+        }
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        
+        guard let currentAudioPath = currentAudioPath else { return }
+        audioPlayer = try? AVAudioPlayer(contentsOf: currentAudioPath)
+        audioPlayer?.delegate = self
+
+        audioPlayer?.prepareToPlay()
+        
+        playAudio()
+    }
+    
+    func playAudio() {
+        audioPlayer?.play()
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+              print("The song ended")
+        }
+}
+
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+    return input.rawValue
 }

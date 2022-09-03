@@ -129,7 +129,7 @@ class MusicPlayerViewController: UIViewController {
             return
         }
         
-        viewModel.setCurrentAudioPath(index: index)
+        viewModel.prepareAudio(index: index)
         songNameLabel.text = songData.name
         artistNameLabel.text = songData.artist?.reduce(into:"") { result, artist in
             result += artist.name }
