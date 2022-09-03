@@ -48,8 +48,6 @@ class MusicPlayerViewController: UIViewController {
     private lazy var songNameLabel: UILabel = {
         let songsNameLabel = UILabel()
         
-        songsNameLabel.text = "name"
-        
         songsNameLabel.numberOfLines = 0
         songsNameLabel.minimumScaleFactor = 0.5
         songsNameLabel.adjustsFontSizeToFitWidth = true
@@ -63,8 +61,6 @@ class MusicPlayerViewController: UIViewController {
     private lazy var artistNameLabel: UILabel = {
         let artistNameLabel = UILabel()
         
-        artistNameLabel.text = "artist"
-        
         artistNameLabel.numberOfLines = 0
         artistNameLabel.minimumScaleFactor = 0.5
         artistNameLabel.adjustsFontSizeToFitWidth = true
@@ -75,10 +71,10 @@ class MusicPlayerViewController: UIViewController {
         return artistNameLabel
     }()
     
-    private lazy var playerProgressSlider: UISlider = {
-        let playerProgressSlider = UISlider()
+    private lazy var playerProgressBar: PlayerProgressBar = {
+        let playerProgressBar = PlayerProgressBar()
         
-        return playerProgressSlider
+        return playerProgressBar
     }()
     
     private lazy var playerButtonsStack: UIStackView = {
@@ -116,6 +112,20 @@ class MusicPlayerViewController: UIViewController {
         addSubviews()
         setupLayout()
     }
+    
+    //
+    
+    private func updateCurrentSongData(indexPath: IndexPath?) {
+        guard let index = indexPath?.last, let songData = viewModel.songsData?[index] else {
+            songNameLabel.text = ""
+            artistNameLabel.text = ""
+            return
+        }
+        
+        songNameLabel.text = songData.name
+        artistNameLabel.text = songData.artist?.reduce(into:"") { result, artist in
+            result += artist.name }
+    }
 }
 
 // MARK: - Appearance methods
@@ -131,7 +141,7 @@ private extension MusicPlayerViewController {
         view.addSubview(songNameLabel)
         view.addSubview(artistNameLabel)
         
-        view.addSubview(playerProgressSlider)
+        view.addSubview(playerProgressBar)
         
         view.addSubview(playerButtonsStack)
         playerButtonsStack.addArrangedSubview(previousButton)
@@ -164,18 +174,18 @@ private extension MusicPlayerViewController {
             artistNameLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.03)
         ])
         
-        playerProgressSlider.translatesAutoresizingMaskIntoConstraints = false
+        playerProgressBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            playerProgressSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            playerProgressSlider.topAnchor.constraint(equalTo: artistNameLabel.bottomAnchor, constant: view.frame.height * 0.02),
-            playerProgressSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 25),
-            playerProgressSlider.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.03)
+            playerProgressBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            playerProgressBar.topAnchor.constraint(equalTo: artistNameLabel.bottomAnchor, constant: view.frame.height * 0.02),
+            playerProgressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 25),
+            playerProgressBar.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.03)
         ])
         
         playerButtonsStack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             playerButtonsStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            playerButtonsStack.topAnchor.constraint(equalTo: playerProgressSlider.bottomAnchor, constant: view.frame.height * 0.02),
+            playerButtonsStack.topAnchor.constraint(equalTo: playerProgressBar.bottomAnchor, constant: view.frame.height * 0.02),
             playerButtonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 25),
             playerButtonsStack.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
         ])
@@ -209,6 +219,16 @@ extension MusicPlayerViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+
+extension MusicPlayerViewController: UICollectionViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        for cell in songsCollectionView.visibleCells {
+            let indexPath = songsCollectionView.indexPath(for: cell)
+            updateCurrentSongData(indexPath: indexPath)
+        }
+    }
+}
 
 
 
