@@ -123,11 +123,13 @@ class MusicPlayerViewController: UIViewController {
     
     private func updateCurrentSongData(indexPath: IndexPath?) {
         guard let index = indexPath?.last, let songData = viewModel.songsData?[index] else {
+            viewModel.currentAudioPath = nil
             songNameLabel.text = ""
             artistNameLabel.text = ""
             return
         }
         
+        viewModel.setCurrentAudioPath(index: index)
         songNameLabel.text = songData.name
         artistNameLabel.text = songData.artist?.reduce(into:"") { result, artist in
             result += artist.name }

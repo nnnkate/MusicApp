@@ -10,11 +10,13 @@ import UIKit
 
 struct Song {
     let name: String
+    let fileName: String
     let image: UIImage?  
     let artist: [Artist]?
     
-    init (name: String, imageName: String, artist: [Artist]?) {
+    init (name: String, fileName: String, imageName: String, artist: [Artist]?) {
         self.name = name
+        self.fileName = fileName
         self.image = UIImage(named: imageName)
         self.artist = artist
     }
