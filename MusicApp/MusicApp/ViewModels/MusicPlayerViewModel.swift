@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+final class MusicPlayerViewModel {
+    let songsData: [Song]? = [Song(name: "ll"), Song(name: "iip"), Song(name: "kki")]
+}

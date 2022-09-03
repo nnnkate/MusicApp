@@ -11,7 +11,7 @@ class MusicPlayerViewController: UIViewController {
     
     // MARK: - Private properties
     
-    private var songsData: [Song]? = [Song(name: "ll"), Song(name: "iip"), Song(name: "kki")]
+    private let viewModel = MusicPlayerViewModel()
     
     private lazy var songsCollectionViewHeight = view.frame.height / 3
     
@@ -44,6 +44,68 @@ class MusicPlayerViewController: UIViewController {
  
         return songsCollectionView
     }()
+    
+    private lazy var songNameLabel: UILabel = {
+        let songsNameLabel = UILabel()
+        
+        songsNameLabel.text = "name"
+        
+        songsNameLabel.numberOfLines = 0
+        songsNameLabel.minimumScaleFactor = 0.5
+        songsNameLabel.adjustsFontSizeToFitWidth = true
+        songsNameLabel.textAlignment = .left
+        songsNameLabel.textColor = .white
+        songsNameLabel.font = .systemFont(ofSize: 25, weight: .bold)
+        
+        return songsNameLabel
+    }()
+    
+    private lazy var artistNameLabel: UILabel = {
+        let artistNameLabel = UILabel()
+        
+        artistNameLabel.text = "artist"
+        
+        artistNameLabel.numberOfLines = 0
+        artistNameLabel.minimumScaleFactor = 0.5
+        artistNameLabel.adjustsFontSizeToFitWidth = true
+        artistNameLabel.textAlignment = .left
+        artistNameLabel.textColor = .white
+        artistNameLabel.font = .systemFont(ofSize: 18, weight: .regular)
+        
+        return artistNameLabel
+    }()
+    
+    private lazy var playerProgressSlider: UISlider = {
+        let playerProgressSlider = UISlider()
+        
+        return playerProgressSlider
+    }()
+    
+    private lazy var playerButtonsStack: UIStackView = {
+        let playerButtonsStack = UIStackView()
+        playerButtonsStack.axis = .horizontal
+        playerButtonsStack.distribution = .equalSpacing
+        
+        return playerButtonsStack
+    }()
+    
+    private lazy var previousButton: UIButton = {
+        let previousButton = UIButton()
+
+        return previousButton
+    }()
+    
+    private lazy var playButton: UIButton = {
+        let playButton = UIButton()
+        
+        return playButton
+    }()
+    
+    private lazy var nextButton: UIButton = {
+        let nextButton = UIButton()
+        
+        return nextButton
+    }()
 
     // MARK: - UIViewController
     
@@ -65,6 +127,16 @@ private extension MusicPlayerViewController {
     
     func addSubviews() {
         view.addSubview(songsCollectionView)
+        
+        view.addSubview(songNameLabel)
+        view.addSubview(artistNameLabel)
+        
+        view.addSubview(playerProgressSlider)
+        
+        view.addSubview(playerButtonsStack)
+        playerButtonsStack.addArrangedSubview(previousButton)
+        playerButtonsStack.addArrangedSubview(playButton)
+        playerButtonsStack.addArrangedSubview(nextButton)
     }
     
     func setupLayout() {
@@ -75,6 +147,38 @@ private extension MusicPlayerViewController {
             songsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             songsCollectionView.bottomAnchor.constraint(equalTo: view.centerYAnchor)
         ])
+        
+        songNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            songNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            songNameLabel.topAnchor.constraint(equalTo: songsCollectionView.bottomAnchor, constant: view.frame.height * 0.005),
+            songNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 25),
+            songNameLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.05)
+        ])
+        
+        artistNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            artistNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            artistNameLabel.topAnchor.constraint(equalTo: songNameLabel.bottomAnchor, constant: view.frame.height * 0.005),
+            artistNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 25),
+            artistNameLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.03)
+        ])
+        
+        playerProgressSlider.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            playerProgressSlider.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            playerProgressSlider.topAnchor.constraint(equalTo: artistNameLabel.bottomAnchor, constant: view.frame.height * 0.02),
+            playerProgressSlider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 25),
+            playerProgressSlider.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.03)
+        ])
+        
+        playerButtonsStack.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            playerButtonsStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            playerButtonsStack.topAnchor.constraint(equalTo: playerProgressSlider.bottomAnchor, constant: view.frame.height * 0.02),
+            playerButtonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 25),
+            playerButtonsStack.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
+        ])
     }
 }
 
@@ -82,7 +186,7 @@ private extension MusicPlayerViewController {
 
 extension MusicPlayerViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let songsData = songsData else { return 0 }
+        guard let songsData = viewModel.songsData else { return 0 }
         
         return songsData.count
     }
@@ -90,7 +194,7 @@ extension MusicPlayerViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SongsCell", for: indexPath) as! SongsCollectionViewCell
         
-        guard let songsData = songsData else { return cell }
+        guard let songsData = viewModel.songsData else { return cell }
         
         cell.updateData(song: songsData[indexPath.row])
         return cell

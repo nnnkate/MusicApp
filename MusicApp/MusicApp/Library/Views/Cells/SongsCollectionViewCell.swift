@@ -69,7 +69,6 @@ final class SongsCollectionViewCell: UICollectionViewCell {
 private extension SongsCollectionViewCell {
     func addSubviews() {
         addSubview(songsLayerView)
-        
         songsLayerView.addSubview(songsImageView)
     }
     
