@@ -80,25 +80,31 @@ class MusicPlayerViewController: UIViewController {
     private lazy var playerButtonsStack: UIStackView = {
         let playerButtonsStack = UIStackView()
         playerButtonsStack.axis = .horizontal
-        playerButtonsStack.distribution = .equalSpacing
+        playerButtonsStack.distribution = .equalCentering
         
         return playerButtonsStack
     }()
     
     private lazy var previousButton: UIButton = {
         let previousButton = UIButton()
-
+        previousButton.setImage(UIImage(systemName: "backward.end"), for: .normal)
+        previousButton.tintColor = .white
+        
         return previousButton
     }()
     
     private lazy var playButton: UIButton = {
         let playButton = UIButton()
+        playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
+        playButton.tintColor = .white
         
         return playButton
     }()
     
     private lazy var nextButton: UIButton = {
         let nextButton = UIButton()
+        nextButton.setImage(UIImage(systemName: "forward.end"), for: .normal)
+        nextButton.tintColor = .white
         
         return nextButton
     }()
@@ -186,7 +192,7 @@ private extension MusicPlayerViewController {
         NSLayoutConstraint.activate([
             playerButtonsStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             playerButtonsStack.topAnchor.constraint(equalTo: playerProgressBar.bottomAnchor, constant: view.frame.height * 0.02),
-            playerButtonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 25),
+            playerButtonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 4),
             playerButtonsStack.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
         ])
     }
