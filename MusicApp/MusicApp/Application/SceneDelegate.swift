@@ -54,7 +54,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 private extension SceneDelegate {
     func initializeRootView(scene: UIWindowScene) {
         let window = UIWindow(windowScene: scene)
-        window.rootViewController = ViewController()
+        window.rootViewController = MusicPlayerViewController()
         window.makeKeyAndVisible()
         self.window = window
     }

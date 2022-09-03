@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class MusicPlayerViewController: UIViewController {
     
     // MARK: - Private properties
     
@@ -58,7 +58,7 @@ class ViewController: UIViewController {
 
 // MARK: - Appearance methods
 
-private extension ViewController {
+private extension MusicPlayerViewController {
     func setupAppearance() {
         view.backgroundColor = .customDarkBlue
     }
@@ -80,7 +80,7 @@ private extension ViewController {
 
 // MARK: - UICollectionViewDataSource
 
-extension ViewController: UICollectionViewDataSource {
+extension MusicPlayerViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let songsData = songsData else { return 0 }
         
@@ -99,7 +99,7 @@ extension ViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 
-extension ViewController: UICollectionViewDelegateFlowLayout {
+extension MusicPlayerViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: songsCollectionViewHeight, height: songsCollectionViewHeight)
     }
