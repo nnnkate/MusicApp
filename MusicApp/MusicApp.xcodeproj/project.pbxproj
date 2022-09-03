@@ -12,6 +12,10 @@
 		85F18D6B28C28292008C0CA7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F18D6A28C28292008C0CA7 /* ViewController.swift */; };
 		85F18D7028C2829A008C0CA7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85F18D6F28C2829A008C0CA7 /* Assets.xcassets */; };
 		85F18D7328C2829A008C0CA7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85F18D7128C2829A008C0CA7 /* LaunchScreen.storyboard */; };
+		85F18D8328C3114B008C0CA7 /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F18D8228C3114B008C0CA7 /* Song.swift */; };
+		85F18D8628C31230008C0CA7 /* SongsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F18D8528C31230008C0CA7 /* SongsCollectionViewCell.swift */; };
+		85F18D8828C35383008C0CA7 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F18D8728C35383008C0CA7 /* UIColor+Extensions.swift */; };
+		85F18D8A28C35CB5008C0CA7 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F18D8928C35CB5008C0CA7 /* Artist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		85F18D6F28C2829A008C0CA7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85F18D7228C2829A008C0CA7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85F18D7428C2829A008C0CA7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85F18D8228C3114B008C0CA7 /* Song.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		85F18D8528C31230008C0CA7 /* SongsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongsCollectionViewCell.swift; sourceTree = "<group>"; };
+		85F18D8728C35383008C0CA7 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		85F18D8928C35CB5008C0CA7 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,13 +63,11 @@
 			isa = PBXGroup;
 			children = (
 				85F18D7A28C282E6008C0CA7 /* Application */,
+				85F18D8028C30E49008C0CA7 /* Models */,
+				85F18D8128C30E72008C0CA7 /* ViewModels */,
+				85F18D7F28C30E3B008C0CA7 /* ViewControllers */,
 				85F18D7B28C28309008C0CA7 /* Library */,
-				85F18D6628C28292008C0CA7 /* AppDelegate.swift */,
-				85F18D6828C28292008C0CA7 /* SceneDelegate.swift */,
-				85F18D6A28C28292008C0CA7 /* ViewController.swift */,
-				85F18D6F28C2829A008C0CA7 /* Assets.xcassets */,
-				85F18D7128C2829A008C0CA7 /* LaunchScreen.storyboard */,
-				85F18D7428C2829A008C0CA7 /* Info.plist */,
+				85F18D7C28C2844B008C0CA7 /* Resources */,
 			);
 			path = MusicApp;
 			sourceTree = "<group>";
@@ -69,6 +75,10 @@
 		85F18D7A28C282E6008C0CA7 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				85F18D6628C28292008C0CA7 /* AppDelegate.swift */,
+				85F18D6828C28292008C0CA7 /* SceneDelegate.swift */,
+				85F18D7128C2829A008C0CA7 /* LaunchScreen.storyboard */,
+				85F18D7428C2829A008C0CA7 /* Info.plist */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -76,8 +86,66 @@
 		85F18D7B28C28309008C0CA7 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				85F18D7D28C284DF008C0CA7 /* Extensions */,
+				85F18D7E28C30E20008C0CA7 /* Views */,
 			);
 			path = Library;
+			sourceTree = "<group>";
+		};
+		85F18D7C28C2844B008C0CA7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				85F18D6F28C2829A008C0CA7 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		85F18D7D28C284DF008C0CA7 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				85F18D8728C35383008C0CA7 /* UIColor+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		85F18D7E28C30E20008C0CA7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				85F18D8428C3121A008C0CA7 /* Cells */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		85F18D7F28C30E3B008C0CA7 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				85F18D6A28C28292008C0CA7 /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		85F18D8028C30E49008C0CA7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				85F18D8228C3114B008C0CA7 /* Song.swift */,
+				85F18D8928C35CB5008C0CA7 /* Artist.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		85F18D8128C30E72008C0CA7 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		85F18D8428C3121A008C0CA7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				85F18D8528C31230008C0CA7 /* SongsCollectionViewCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,9 +218,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85F18D8328C3114B008C0CA7 /* Song.swift in Sources */,
+				85F18D8828C35383008C0CA7 /* UIColor+Extensions.swift in Sources */,
 				85F18D6B28C28292008C0CA7 /* ViewController.swift in Sources */,
 				85F18D6728C28292008C0CA7 /* AppDelegate.swift in Sources */,
+				85F18D8628C31230008C0CA7 /* SongsCollectionViewCell.swift in Sources */,
 				85F18D6928C28292008C0CA7 /* SceneDelegate.swift in Sources */,
+				85F18D8A28C35CB5008C0CA7 /* Artist.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,11 +365,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 76TUWTZW78;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MusicApp/Info.plist;
+				INFOPLIST_FILE = MusicApp/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -307,7 +380,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -320,11 +393,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 76TUWTZW78;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MusicApp/Info.plist;
+				INFOPLIST_FILE = MusicApp/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -334,7 +408,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
