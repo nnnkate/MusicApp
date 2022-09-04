@@ -52,7 +52,7 @@ class MusicPlayerViewController: UIViewController {
     private lazy var songNameLabel: UILabel = {
         let songsNameLabel = UILabel()
         
-        songsNameLabel.numberOfLines = 0
+        songsNameLabel.numberOfLines = 1
         songsNameLabel.minimumScaleFactor = 0.5
         songsNameLabel.adjustsFontSizeToFitWidth = true
         songsNameLabel.textAlignment = .left
@@ -65,7 +65,7 @@ class MusicPlayerViewController: UIViewController {
     private lazy var artistNameLabel: UILabel = {
         let artistNameLabel = UILabel()
         
-        artistNameLabel.numberOfLines = 0
+        artistNameLabel.numberOfLines = 1
         artistNameLabel.minimumScaleFactor = 0.5
         artistNameLabel.adjustsFontSizeToFitWidth = true
         artistNameLabel.textAlignment = .left
@@ -212,7 +212,7 @@ private extension MusicPlayerViewController {
             playerProgressBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             playerProgressBar.topAnchor.constraint(equalTo: artistNameLabel.bottomAnchor, constant: view.frame.height * 0.02),
             playerProgressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 25),
-            playerProgressBar.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.03)
+            playerProgressBar.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.07)
         ])
         
         playerButtonsStack.translatesAutoresizingMaskIntoConstraints = false
