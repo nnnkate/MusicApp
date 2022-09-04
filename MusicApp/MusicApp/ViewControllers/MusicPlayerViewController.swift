@@ -13,7 +13,7 @@ class MusicPlayerViewController: UIViewController {
     
     private let viewModel: MusicPlayerViewModel = MusicPlayerViewModel()
     
-    private var currentPage = 0
+    private var currentCell = 0
     
     private lazy var songsCollectionViewHeight = view.frame.height / 3
     
@@ -94,6 +94,9 @@ class MusicPlayerViewController: UIViewController {
         previousButton.setImage(UIImage(systemName: "backward.end"), for: .normal)
         previousButton.tintColor = .white
         
+        let action = UIAction { [weak self] _ in self?.handlePreviousButtonTouch() }
+        previousButton.addAction(action, for: .touchUpInside)
+        
         return previousButton
     }()
     
@@ -102,7 +105,7 @@ class MusicPlayerViewController: UIViewController {
         playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
         playButton.tintColor = .white
         
-        let action = UIAction { [weak self] _ in self?.handlePlayButton() }
+        let action = UIAction { [weak self] _ in self?.handlePlayButtonTouch() }
         playButton.addAction(action, for: .touchUpInside)
         
         return playButton
@@ -112,6 +115,9 @@ class MusicPlayerViewController: UIViewController {
         let nextButton = UIButton()
         nextButton.setImage(UIImage(systemName: "forward.end"), for: .normal)
         nextButton.tintColor = .white
+        
+        let action = UIAction { [weak self] _ in self?.handleNextButtonTouch() }
+        nextButton.addAction(action, for: .touchUpInside)
         
         return nextButton
     }()
@@ -124,6 +130,8 @@ class MusicPlayerViewController: UIViewController {
         setupAppearance()
         addSubviews()
         setupLayout()
+        
+        updateCurrentSongData(index: currentCell)
     }
     
     //
@@ -240,18 +248,18 @@ extension MusicPlayerViewController: UICollectionViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         guard let songsData = viewModel.songsData else { return }
         
-        songsCollectionView.reloadItems(at: [IndexPath(row: currentPage, section: 0)])
+        songsCollectionView.reloadItems(at: [IndexPath(row: currentCell, section: 0)])
 
         var pageWidth: CGFloat = 0
         let currentPageWidth = songsCollectionViewHeight + songsCollectionViewSideInset - songsCollectionViewFrameSpacing
-        if currentPage != 0 {
+        if currentCell != 0 {
             pageWidth = songsCollectionViewHeight + songsCollectionViewSideInset
         }
         
-        var newPage = currentPage
+        var newPage = currentCell
 
         if velocity.x != 0 {
-            newPage = velocity.x > 0 ? currentPage + 1 : currentPage - 1
+            newPage = velocity.x > 0 ? currentCell + 1 : currentCell - 1
             if newPage < 0 {
                 newPage = songsData.count - 1
             }
@@ -260,19 +268,37 @@ extension MusicPlayerViewController: UICollectionViewDelegate {
             }
         }
 
-        currentPage = newPage
+        currentCell = newPage
         let point = CGPoint (x: CGFloat(newPage - 1) * pageWidth + currentPageWidth, y: 0)
         targetContentOffset.pointee = point
         
-        updateCurrentSongData(index: currentPage)
+        updateCurrentSongData(index: currentCell)
     }
 }
 
 // MARK: - Actions
 
 private extension MusicPlayerViewController {
-    func handlePlayButton() {
+    func handlePreviousButtonTouch() {
+        guard let songsData = viewModel.songsData else { return }
+        
+        let previousCell = currentCell == 0 ? songsData.count - 1 : currentCell - 1
+        songsCollectionView.scrollToItem(at: IndexPath(row: previousCell, section: 0), at: .centeredHorizontally, animated: false)
+        currentCell = previousCell
+        updateCurrentSongData(index: currentCell)
+    }
+    
+    func handlePlayButtonTouch() {
         viewModel.playAudio()
+    }
+    
+    func handleNextButtonTouch() {
+        guard let songsData = viewModel.songsData else { return }
+        
+        let nextCell = currentCell == songsData.count - 1 ? 0 : currentCell + 1
+        songsCollectionView.scrollToItem(at: IndexPath(row: nextCell, section: 0), at: .centeredHorizontally, animated: false)
+        currentCell = nextCell
+        updateCurrentSongData(index: currentCell)
     }
 }
 
