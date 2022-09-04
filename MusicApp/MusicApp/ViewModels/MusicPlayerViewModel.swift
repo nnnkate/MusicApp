@@ -36,7 +36,7 @@ final class MusicPlayerViewModel: NSObject {
                                    imageName: "album_motley_crue",
                                    artist: [Artist(name: "Mötley Crüe")])]
     
-   
+    private(set)var timer: Timer?
 }
 
 extension MusicPlayerViewModel: AVAudioPlayerDelegate {
@@ -76,23 +76,60 @@ extension MusicPlayerViewModel: MusicPlayerViewModelProtocol {
         }
         
         if audioIsPlaying {
-            audioPlayer?.stop()
+            stopPlayingAudio()
             return
         }
         
-        audioPlayer?.play()
+        startPlayingAudio()
     }
     
     func continuePlayback(_ play: Bool) {
         if play {
-            audioPlayer?.play()
+            startPlayingAudio()
             return
         }
         
+        stopPlayingAudio()
+    }
+    
+    private func startPlayingAudio() {
+        audioPlayer?.play()
+        createTimer()
+    }
+    
+    private func stopPlayingAudio() {
         audioPlayer?.stop()
+        cancelTimer()
     }
 }
 
 fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
     return input.rawValue
+}
+
+// MARK: - Timer
+
+extension MusicPlayerViewModel {
+    func createTimer() {
+        if timer == nil {
+            let timer = Timer(timeInterval: 1.0,
+                              target: self,
+                              selector: #selector(updateTimer),
+                              userInfo: nil,
+                              repeats: true)
+            RunLoop.current.add(timer, forMode: .common)
+            timer.tolerance = 0.1
+          
+            self.timer = timer
+       }
+    }
+    
+    @objc func updateTimer() {
+       print("clock-clock")
+    }
+    
+    func cancelTimer() {
+      timer?.invalidate()
+      timer = nil
+    }
 }
