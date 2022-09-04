@@ -48,19 +48,15 @@ extension MusicPlayerViewModel: AVAudioPlayerDelegate {
 extension MusicPlayerViewModel: MusicPlayerViewModelProtocol {
     private func setCurrentAudioPath(index: Int) {
         currentAudioPath = URL(fileURLWithPath: Bundle.main.path(forResource: songsData?[index].fileName, ofType: "mp3") ?? "")
-        print("\(String(describing: currentAudioPath))")
     }
     
     func prepareAudio(index: Int) {
         setCurrentAudioPath(index: index)
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)))
-        } catch {
-        }
-        do {
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch {
-        }
+        
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playback)))
+        
+        try? AVAudioSession.sharedInstance().setActive(true)
+        
         UIApplication.shared.beginReceivingRemoteControlEvents()
         
         guard let currentAudioPath = currentAudioPath else { return }
@@ -71,9 +67,7 @@ extension MusicPlayerViewModel: MusicPlayerViewModelProtocol {
     }
     
     func playAudio() {
-        guard let audioIsPlaying = audioPlayer?.isPlaying else {
-            return
-        }
+        guard let audioIsPlaying = audioPlayer?.isPlaying else { return }
         
         if audioIsPlaying {
             stopPlayingAudio()
@@ -103,10 +97,6 @@ extension MusicPlayerViewModel: MusicPlayerViewModelProtocol {
     }
 }
 
-fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
-    return input.rawValue
-}
-
 // MARK: - Timer
 
 extension MusicPlayerViewModel {
@@ -125,11 +115,17 @@ extension MusicPlayerViewModel {
     }
     
     @objc func updateTimer() {
-       print("clock-clock")
+        print("clock-clock")
     }
     
     func cancelTimer() {
-      timer?.invalidate()
-      timer = nil
+        timer?.invalidate()
+        timer = nil
     }
+}
+
+// MARK: - Helpers
+
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+    return input.rawValue
 }
