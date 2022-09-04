@@ -19,7 +19,14 @@ protocol MusicPlayerViewModelProtocol {
     func continuePlayback(_ play: Bool)
 }
 
+protocol MusicPlayerViewModelDelegate: AnyObject {
+    func updatePlayerProgressBar()
+}
+
 final class MusicPlayerViewModel: NSObject {
+    
+    weak var delegate: MusicPlayerViewModelDelegate?
+    
     private(set) var audioPlayer: AVAudioPlayer?
     private(set) var currentAudioPath: URL?
     
@@ -115,7 +122,7 @@ extension MusicPlayerViewModel {
     }
     
     @objc func updateTimer() {
-        print("clock-clock")
+        delegate?.updatePlayerProgressBar()
     }
     
     func cancelTimer() {

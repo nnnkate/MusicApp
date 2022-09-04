@@ -127,7 +127,19 @@ class MusicPlayerViewController: UIViewController {
         
         return nextButton
     }()
-
+    
+    // MARK: - Initialization
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        
+        viewModel.delegate = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - UIViewController
     
     override func viewDidLoad() {
@@ -293,6 +305,14 @@ extension MusicPlayerViewController: UICollectionViewDelegate {
         
         updateCurrentSongData(index: currentCell)
         viewModel.continuePlayback(isPlaying)
+    }
+}
+
+// MARK: - MusicPlayerViewModelDelegate
+
+extension MusicPlayerViewController: MusicPlayerViewModelDelegate {
+    func updatePlayerProgressBar() {
+        print("updatePlayerProgressBar")
     }
 }
 
