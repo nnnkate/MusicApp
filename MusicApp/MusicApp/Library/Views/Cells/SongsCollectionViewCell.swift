@@ -16,15 +16,24 @@ final class SongsCollectionViewCell: UICollectionViewCell {
         
         songsLayerView.backgroundColor = .white
 
+        songsLayerView.layer.opacity = 0.08
         songsLayerView.layer.cornerRadius = 15.0
-        songsLayerView.layer.borderWidth = 0.0
-        songsLayerView.layer.shadowColor = UIColor.lightGray.cgColor
-        songsLayerView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        songsLayerView.layer.shadowRadius = 3.0
-        songsLayerView.layer.shadowOpacity = 1
+       
         songsLayerView.layer.masksToBounds = false
         
         return songsLayerView
+    }()
+    
+    private lazy var songsLayerBorderView: UIView = {
+        let songsLayerBorderView = UIView()
+        
+        songsLayerBorderView.layer.cornerRadius = 15.0
+        songsLayerBorderView.layer.borderWidth = 0.1
+        songsLayerBorderView.layer.borderColor = UIColor.white.cgColor
+
+        songsLayerBorderView.layer.masksToBounds = false
+        
+        return songsLayerBorderView
     }()
     
     private var songsImageView: UIImageView = {
@@ -68,25 +77,34 @@ final class SongsCollectionViewCell: UICollectionViewCell {
 
 private extension SongsCollectionViewCell {
     func addSubviews() {
-        addSubview(songsLayerView)
-        songsLayerView.addSubview(songsImageView)
+        addSubview(songsLayerBorderView)
+        songsLayerBorderView.addSubview(songsLayerView)
+        addSubview(songsImageView)
     }
     
     func configureLayout() {
+        songsLayerBorderView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            songsLayerBorderView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            songsLayerBorderView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            songsLayerBorderView.topAnchor.constraint(equalTo: self.topAnchor, constant: 40),
+            songsLayerBorderView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+        ])
+        
         songsLayerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            songsLayerView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            songsLayerView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            songsLayerView.topAnchor.constraint(equalTo: self.topAnchor),
-            songsLayerView.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+            songsLayerView.centerXAnchor.constraint(equalTo: songsLayerBorderView.centerXAnchor),
+            songsLayerView.centerYAnchor.constraint(equalTo: songsLayerBorderView.centerYAnchor),
+            songsLayerView.topAnchor.constraint(equalTo: songsLayerBorderView.topAnchor),
+            songsLayerView.leadingAnchor.constraint(equalTo: songsLayerBorderView.leadingAnchor)
         ])
 
         songsImageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            songsImageView.centerXAnchor.constraint(equalTo: songsLayerView.centerXAnchor),
-            songsImageView.topAnchor.constraint(equalTo: songsLayerView.topAnchor),
-            songsImageView.leadingAnchor.constraint(equalTo: songsLayerView.leadingAnchor),
-            songsImageView.centerYAnchor.constraint(equalTo: songsLayerView.centerYAnchor)
+            songsImageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            songsImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15),
+            songsImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+            songsImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
 }
