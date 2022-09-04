@@ -246,7 +246,8 @@ extension MusicPlayerViewController: UICollectionViewDelegateFlowLayout {
 
 extension MusicPlayerViewController: UICollectionViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        guard let songsData = viewModel.songsData else { return }
+        guard let isPlaying = viewModel.audioPlayer?.isPlaying,
+              let songsData = viewModel.songsData else { return }
         
         songsCollectionView.reloadItems(at: [IndexPath(row: currentCell, section: 0)])
 
@@ -273,6 +274,7 @@ extension MusicPlayerViewController: UICollectionViewDelegate {
         targetContentOffset.pointee = point
         
         updateCurrentSongData(index: currentCell)
+        viewModel.continuePlayback(isPlaying)
     }
 }
 
@@ -280,25 +282,31 @@ extension MusicPlayerViewController: UICollectionViewDelegate {
 
 private extension MusicPlayerViewController {
     func handlePreviousButtonTouch() {
-        guard let songsData = viewModel.songsData else { return }
+        guard let isPlaying = viewModel.audioPlayer?.isPlaying,
+              let songsData = viewModel.songsData else { return }
         
         let previousCell = currentCell == 0 ? songsData.count - 1 : currentCell - 1
         songsCollectionView.scrollToItem(at: IndexPath(row: previousCell, section: 0), at: .centeredHorizontally, animated: false)
         currentCell = previousCell
         updateCurrentSongData(index: currentCell)
+        viewModel.continuePlayback(isPlaying)
     }
     
     func handlePlayButtonTouch() {
+        let isPlaying = viewModel.audioPlayer?.isPlaying ?? false
+        playButton.setImage(isPlaying ? UIImage(systemName: "play.fill") : UIImage(systemName: "pause.fill"), for: .normal)
         viewModel.playAudio()
     }
     
     func handleNextButtonTouch() {
-        guard let songsData = viewModel.songsData else { return }
+        guard let isPlaying = viewModel.audioPlayer?.isPlaying,
+              let songsData = viewModel.songsData else { return }
         
         let nextCell = currentCell == songsData.count - 1 ? 0 : currentCell + 1
         songsCollectionView.scrollToItem(at: IndexPath(row: nextCell, section: 0), at: .centeredHorizontally, animated: false)
         currentCell = nextCell
         updateCurrentSongData(index: currentCell)
+        viewModel.continuePlayback(isPlaying)
     }
 }
 

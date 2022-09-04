@@ -16,6 +16,7 @@ protocol MusicPlayerViewModelProtocol {
     
     func prepareAudio(index: Int)
     func playAudio()
+    func continuePlayback(_ play: Bool)
 }
 
 final class MusicPlayerViewModel: NSObject {
@@ -80,6 +81,15 @@ extension MusicPlayerViewModel: MusicPlayerViewModelProtocol {
         }
         
         audioPlayer?.play()
+    }
+    
+    func continuePlayback(_ play: Bool) {
+        if play {
+            audioPlayer?.play()
+            return
+        }
+        
+        audioPlayer?.stop()
     }
 }
 
