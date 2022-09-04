@@ -13,9 +13,13 @@ class MusicPlayerViewController: UIViewController {
     
     private let viewModel: MusicPlayerViewModel = MusicPlayerViewModel()
     
+    private var currentPage = 0
+    
     private lazy var songsCollectionViewHeight = view.frame.height / 3
     
     private lazy var songsCollectionViewSideInset: CGFloat = view.frame.width * 0.1
+    
+    private lazy var songsCollectionViewFrameSpacing = (view.bounds.width - songsCollectionViewHeight) / 2
     
     // MARK: - Views
     
@@ -124,8 +128,8 @@ class MusicPlayerViewController: UIViewController {
     
     //
     
-    private func updateCurrentSongData(indexPath: IndexPath?) {
-        guard let index = indexPath?.last, let songData = viewModel.songsData?[index] else {
+    private func updateCurrentSongData(index: Int) {
+        guard let songData = viewModel.songsData?[index] else {
             // stop music!
             songNameLabel.text = ""
             artistNameLabel.text = ""
@@ -233,11 +237,34 @@ extension MusicPlayerViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - UICollectionViewDelegate
 
 extension MusicPlayerViewController: UICollectionViewDelegate {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        for cell in songsCollectionView.visibleCells {
-            let indexPath = songsCollectionView.indexPath(for: cell)
-            updateCurrentSongData(indexPath: indexPath)
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        guard let songsData = viewModel.songsData else { return }
+        
+        songsCollectionView.reloadItems(at: [IndexPath(row: currentPage, section: 0)])
+
+        var pageWidth: CGFloat = 0
+        let currentPageWidth = songsCollectionViewHeight + songsCollectionViewSideInset - songsCollectionViewFrameSpacing
+        if currentPage != 0 {
+            pageWidth = songsCollectionViewHeight + songsCollectionViewSideInset
         }
+        
+        var newPage = currentPage
+
+        if velocity.x != 0 {
+            newPage = velocity.x > 0 ? currentPage + 1 : currentPage - 1
+            if newPage < 0 {
+                newPage = songsData.count - 1
+            }
+            if newPage > songsData.count - 1 {
+                newPage = 0
+            }
+        }
+
+        currentPage = newPage
+        let point = CGPoint (x: CGFloat(newPage - 1) * pageWidth + currentPageWidth, y: 0)
+        targetContentOffset.pointee = point
+        
+        updateCurrentSongData(index: currentPage)
     }
 }
 
