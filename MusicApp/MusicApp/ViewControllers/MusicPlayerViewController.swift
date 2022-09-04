@@ -161,7 +161,7 @@ class MusicPlayerViewController: UIViewController {
 
 private extension MusicPlayerViewController {
     func setupAppearance() {
-        view.backgroundColor = .customDarkBlue
+        view.backgroundColor = .customDarkPurple
     }
     
     func addSubviews() {
@@ -186,7 +186,7 @@ private extension MusicPlayerViewController {
         songsCollectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             songsCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            songsCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height / 9),
+            songsCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: view.frame.height / 20),
             songsCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             songsCollectionView.bottomAnchor.constraint(equalTo: view.centerYAnchor)
         ])
@@ -202,7 +202,7 @@ private extension MusicPlayerViewController {
         artistNameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             artistNameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            artistNameLabel.topAnchor.constraint(equalTo: songNameLabel.bottomAnchor, constant: view.frame.height * 0.005),
+            artistNameLabel.topAnchor.constraint(equalTo: songNameLabel.bottomAnchor, constant: view.frame.height * 0.002),
             artistNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 25),
             artistNameLabel.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.03)
         ])

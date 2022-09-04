@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 extension UIColor {
-    class var customDarkBlue: UIColor { UIColor(red: 0.0627, green: 0.0471, blue: 0.2275, alpha: 1.0) }
-    class var customPurpleColor: UIColor { UIColor(red: 0.5882, green: 0.2667, blue: 0.9569, alpha: 1) }
+    class var customDarkPurple: UIColor { UIColor(red: 0.0824, green: 0.0118, blue: 0.1765, alpha: 1) }
+    class var customPurpleBlue: UIColor { UIColor(red: 0.1922, green: 0.2235, blue: 0.5412, alpha: 1) }
+    class var customPurple: UIColor { UIColor(red: 0.5882, green: 0.2667, blue: 0.9569, alpha: 1) }
 }

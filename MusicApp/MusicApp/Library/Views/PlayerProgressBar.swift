@@ -12,8 +12,8 @@ final class PlayerProgressBar: UIView {
     
     private let slider: UISlider = {
         let slider = UISlider()
-        slider.thumbTintColor = .customPurpleColor
-        slider.tintColor = .customPurpleColor
+        slider.thumbTintColor = .customPurple
+        slider.tintColor = .customPurple
         return slider
     }()
     

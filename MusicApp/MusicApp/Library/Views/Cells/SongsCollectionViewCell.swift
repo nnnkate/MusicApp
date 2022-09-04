@@ -28,11 +28,19 @@ final class SongsCollectionViewCell: UICollectionViewCell {
         let songsLayerBorderView = UIView()
         
         songsLayerBorderView.layer.cornerRadius = 15.0
-        songsLayerBorderView.layer.borderWidth = 0.1
+        songsLayerBorderView.layer.borderWidth = 0.2
         songsLayerBorderView.layer.borderColor = UIColor.white.cgColor
 
         songsLayerBorderView.layer.masksToBounds = false
         
+        songsLayerBorderView.layer.backgroundColor = UIColor.customPurpleBlue.cgColor
+        songsLayerBorderView.layer.opacity = 0.8
+        songsLayerBorderView.layer.shadowColor = UIColor.customPurpleBlue.cgColor
+        songsLayerBorderView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        songsLayerBorderView.layer.shadowRadius = 20.0
+        songsLayerBorderView.layer.shadowOpacity = 1
+        songsLayerBorderView.layer.masksToBounds = false
+
         return songsLayerBorderView
     }()
     
