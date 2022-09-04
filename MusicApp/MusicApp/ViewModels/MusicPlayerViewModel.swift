@@ -10,9 +10,17 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 
+protocol MusicPlayerViewModelProtocol {
+    var audioPlayer: AVAudioPlayer? { get }
+    var currentAudioPath: URL? { get }
+    
+    func prepareAudio(index: Int)
+    func playAudio()
+}
+
 final class MusicPlayerViewModel: NSObject {
-    var audioPlayer: AVAudioPlayer?
-    var currentAudioPath: URL?
+    private(set) var audioPlayer: AVAudioPlayer?
+    private(set) var currentAudioPath: URL?
     
     let songsData: [Song]? = [Song(name: "Cut The Line",
                                    fileName: "Papa_Roach_-_Cut_The_Line_",
@@ -31,7 +39,13 @@ final class MusicPlayerViewModel: NSObject {
 }
 
 extension MusicPlayerViewModel: AVAudioPlayerDelegate {
-    func setCurrentAudioPath(index: Int) {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        print("The song ended")
+    }
+}
+
+extension MusicPlayerViewModel: MusicPlayerViewModelProtocol {
+    private func setCurrentAudioPath(index: Int) {
         currentAudioPath = URL(fileURLWithPath: Bundle.main.path(forResource: songsData?[index].fileName, ofType: "mp3") ?? "")
         print("\(String(describing: currentAudioPath))")
     }
@@ -53,17 +67,20 @@ extension MusicPlayerViewModel: AVAudioPlayerDelegate {
         audioPlayer?.delegate = self
 
         audioPlayer?.prepareToPlay()
-        
-        playAudio()
     }
     
     func playAudio() {
+        guard let audioIsPlaying = audioPlayer?.isPlaying else {
+            return
+        }
+        
+        if audioIsPlaying {
+            audioPlayer?.stop()
+            return
+        }
+        
         audioPlayer?.play()
     }
-    
-    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-              print("The song ended")
-        }
 }
 
 fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {

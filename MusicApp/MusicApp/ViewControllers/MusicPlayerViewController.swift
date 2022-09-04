@@ -11,11 +11,11 @@ class MusicPlayerViewController: UIViewController {
     
     // MARK: - Private properties
     
-    private let viewModel = MusicPlayerViewModel()
+    private let viewModel: MusicPlayerViewModel = MusicPlayerViewModel()
     
     private lazy var songsCollectionViewHeight = view.frame.height / 3
     
-    private lazy var songsCollectionViewSideInset: CGFloat = view.frame.width * 0.15
+    private lazy var songsCollectionViewSideInset: CGFloat = view.frame.width * 0.1
     
     // MARK: - Views
     
@@ -98,6 +98,9 @@ class MusicPlayerViewController: UIViewController {
         playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
         playButton.tintColor = .white
         
+        let action = UIAction { [weak self] _ in self?.handlePlayButton() }
+        playButton.addAction(action, for: .touchUpInside)
+        
         return playButton
     }()
     
@@ -123,7 +126,7 @@ class MusicPlayerViewController: UIViewController {
     
     private func updateCurrentSongData(indexPath: IndexPath?) {
         guard let index = indexPath?.last, let songData = viewModel.songsData?[index] else {
-            viewModel.currentAudioPath = nil
+            // stop music!
             songNameLabel.text = ""
             artistNameLabel.text = ""
             return
@@ -237,6 +240,15 @@ extension MusicPlayerViewController: UICollectionViewDelegate {
         }
     }
 }
+
+// MARK: - Actions
+
+private extension MusicPlayerViewController {
+    func handlePlayButton() {
+        viewModel.playAudio()
+    }
+}
+
 
 
 
