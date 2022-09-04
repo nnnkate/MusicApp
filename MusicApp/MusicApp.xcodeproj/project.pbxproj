@@ -21,6 +21,7 @@
 		85F18D9128C3DC13008C0CA7 /* Papa_Roach_-_Cut_The_Line_.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 85F18D9028C3DC13008C0CA7 /* Papa_Roach_-_Cut_The_Line_.mp3 */; };
 		85F18D9328C3E875008C0CA7 /* Scorpions_-_Shining_Of_Your_Soul_.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 85F18D9228C3E875008C0CA7 /* Scorpions_-_Shining_Of_Your_Soul_.mp3 */; };
 		85F18D9528C3E90A008C0CA7 /* Motley_Crue_-_Kickstart_My_Heart_.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 85F18D9428C3E90A008C0CA7 /* Motley_Crue_-_Kickstart_My_Heart_.mp3 */; };
+		85F18D9728C50B4A008C0CA7 /* PlayButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F18D9628C50B4A008C0CA7 /* PlayButtonView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		85F18D9028C3DC13008C0CA7 /* Papa_Roach_-_Cut_The_Line_.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Papa_Roach_-_Cut_The_Line_.mp3"; sourceTree = "<group>"; };
 		85F18D9228C3E875008C0CA7 /* Scorpions_-_Shining_Of_Your_Soul_.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Scorpions_-_Shining_Of_Your_Soul_.mp3"; sourceTree = "<group>"; };
 		85F18D9428C3E90A008C0CA7 /* Motley_Crue_-_Kickstart_My_Heart_.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Motley_Crue_-_Kickstart_My_Heart_.mp3"; sourceTree = "<group>"; };
+		85F18D9628C50B4A008C0CA7 /* PlayButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButtonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				85F18D8D28C371A3008C0CA7 /* PlayerProgressBar.swift */,
+				85F18D9628C50B4A008C0CA7 /* PlayButtonView.swift */,
 				85F18D8428C3121A008C0CA7 /* Cells */,
 			);
 			path = Views;
@@ -245,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85F18D8328C3114B008C0CA7 /* Song.swift in Sources */,
+				85F18D9728C50B4A008C0CA7 /* PlayButtonView.swift in Sources */,
 				85F18D8828C35383008C0CA7 /* UIColor+Extensions.swift in Sources */,
 				85F18D6B28C28292008C0CA7 /* MusicPlayerViewController.swift in Sources */,
 				85F18D6728C28292008C0CA7 /* AppDelegate.swift in Sources */,

@@ -84,7 +84,7 @@ class MusicPlayerViewController: UIViewController {
     private lazy var playerButtonsStack: UIStackView = {
         let playerButtonsStack = UIStackView()
         playerButtonsStack.axis = .horizontal
-        playerButtonsStack.distribution = .equalCentering
+        playerButtonsStack.distribution = .fillEqually
         
         return playerButtonsStack
     }()
@@ -98,6 +98,12 @@ class MusicPlayerViewController: UIViewController {
         previousButton.addAction(action, for: .touchUpInside)
         
         return previousButton
+    }()
+    
+    private lazy var playButtonView: PlayButtonView = {
+        let playButtonView = PlayButtonView()
+        
+        return playButtonView
     }()
     
     private lazy var playButton: UIButton = {
@@ -167,8 +173,12 @@ private extension MusicPlayerViewController {
         view.addSubview(playerProgressBar)
         
         view.addSubview(playerButtonsStack)
+        
         playerButtonsStack.addArrangedSubview(previousButton)
-        playerButtonsStack.addArrangedSubview(playButton)
+        
+        playerButtonsStack.addArrangedSubview(playButtonView)
+        playButtonView.addSubview(playButton)
+        
         playerButtonsStack.addArrangedSubview(nextButton)
     }
     
@@ -211,6 +221,14 @@ private extension MusicPlayerViewController {
             playerButtonsStack.topAnchor.constraint(equalTo: playerProgressBar.bottomAnchor, constant: view.frame.height * 0.02),
             playerButtonsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 4),
             playerButtonsStack.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.2)
+        ])
+        
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            playButton.centerXAnchor.constraint(equalTo: playButtonView.centerXAnchor),
+            playButton.topAnchor.constraint(equalTo: playButtonView.topAnchor),
+            playButton.leadingAnchor.constraint(equalTo: playButtonView.leadingAnchor),
+            playButton.heightAnchor.constraint(equalTo: playButtonView.heightAnchor)
         ])
     }
 }
