@@ -36,6 +36,7 @@ class MusicPlayerViewController: UIViewController {
         songsCollectionView.delegate = self
         
         songsCollectionView.backgroundColor = .clear
+        songsCollectionView.showsHorizontalScrollIndicator = false
         
         songsCollectionView.contentInset = UIEdgeInsets(top: 0,
                                                         left: songsCollectionViewSideInset,
