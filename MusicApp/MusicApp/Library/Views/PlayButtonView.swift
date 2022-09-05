@@ -10,6 +10,8 @@ import UIKit
 
 final class PlayButtonView: UIView {
     
+    // MARK: - Views
+    
     private lazy var circleImageView: UIImageView = {
         let circleImageView = UIImageView(image: UIImage(systemName: "circle.fill"))
         
@@ -24,10 +26,11 @@ final class PlayButtonView: UIView {
         return circleImageView
     }()
     
+    // MARK: - Initialization
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         
-        setupAppearance()
         addSubviews()
         configureLayout()
     }
@@ -40,10 +43,6 @@ final class PlayButtonView: UIView {
 // MARK: - Appearance Methods
 
 private extension PlayButtonView {
-    func setupAppearance() {
-        //self.layer.opacity = 0.7
-    }
-    
     func addSubviews() {
         addSubview(circleImageView)
     }

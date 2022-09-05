@@ -11,9 +11,6 @@ import AVFoundation
 import MediaPlayer
 
 protocol MusicPlayerViewModelProtocol {
-    var audioPlayer: AVAudioPlayer? { get }
-    var currentAudioPath: URL? { get }
-    
     func prepareAudio(index: Int)
     func playAudio()
     func continuePlayback(_ play: Bool)
@@ -25,7 +22,11 @@ protocol MusicPlayerViewModelDelegate: AnyObject {
 
 final class MusicPlayerViewModel: NSObject {
     
+    // MARK: - Public Properties
+    
     weak var delegate: MusicPlayerViewModelDelegate?
+    
+    // MARK: - Private Properties
     
     private(set) var audioPlayer: AVAudioPlayer?
     private(set) var currentAudioPath: URL? {
@@ -33,23 +34,24 @@ final class MusicPlayerViewModel: NSObject {
             newAudio = true
         }
     }
-    private(set) var newAudio = true
+    private var newAudio = true
     
-    let songsData: [Song]? = [Song(name: "Cut The Line",
-                                   fileName: "Papa_Roach_-_Cut_The_Line_",
-                                   imageName: "album_papa_roach",
-                                   artist: [Artist(name: "Papa Roach")]),
-                              Song(name: "Shining Of Your Soul",
-                                   fileName: "Scorpions_-_Shining_Of_Your_Soul_",
-                                   imageName: "album_scorpions",
-                                   artist: [Artist(name: "Scorpions")]),
-                              Song(name: "Kickstart My Heart",
-                                   fileName: "Motley_Crue_-_Kickstart_My_Heart_",
-                                   imageName: "album_motley_crue",
-                                   artist: [Artist(name: "Mötley Crüe")])]
+    private(set) var songsData: [Song]? = [Song(name: "Cut The Line",
+                                                fileName: "Papa_Roach_-_Cut_The_Line_",
+                                                imageName: "album_papa_roach",
+                                                artist: [Artist(name: "Papa Roach")]),
+                                           Song(name: "Shining Of Your Soul",
+                                                fileName: "Scorpions_-_Shining_Of_Your_Soul_",
+                                                imageName: "album_scorpions",
+                                                artist: [Artist(name: "Scorpions")]),
+                                           Song(name: "Kickstart My Heart",
+                                                fileName: "Motley_Crue_-_Kickstart_My_Heart_",
+                                                imageName: "album_motley_crue",
+                                                artist: [Artist(name: "Mötley Crüe")])]
     
-    private(set)var timer: Timer?
-    private(set)var currentTimerValue: Int = 0
+    private var timer: Timer?
+    private var currentTimerValue: Int = 0
+    
 }
 
 extension MusicPlayerViewModel: AVAudioPlayerDelegate {
@@ -59,9 +61,8 @@ extension MusicPlayerViewModel: AVAudioPlayerDelegate {
 }
 
 extension MusicPlayerViewModel: MusicPlayerViewModelProtocol {
-    private func setCurrentAudioPath(index: Int) {
-        currentAudioPath = URL(fileURLWithPath: Bundle.main.path(forResource: songsData?[index].fileName, ofType: "mp3") ?? "")
-    }
+    
+    // MARK: - Public Methods
     
     func prepareAudio(index: Int) {
         setCurrentAudioPath(index: index)
@@ -101,14 +102,20 @@ extension MusicPlayerViewModel: MusicPlayerViewModelProtocol {
         delegate?.updatePlayerProgressBar(songDuration: audioPlayer?.duration, playingTime: currentTimerValue)
     }
     
-    private func startPlayingAudio() {
+    func stopPlayingAudio() {
+        audioPlayer?.stop()
+        cancelTimer()
+    }
+    
+    func startPlayingAudio() {
         audioPlayer?.play()
         createTimer()
     }
     
-    private func stopPlayingAudio() {
-        audioPlayer?.stop()
-        cancelTimer()
+    // MARK: - Private Methods
+    
+    private func setCurrentAudioPath(index: Int) {
+        currentAudioPath = URL(fileURLWithPath: Bundle.main.path(forResource: songsData?[index].fileName, ofType: "mp3") ?? "")
     }
 }
 

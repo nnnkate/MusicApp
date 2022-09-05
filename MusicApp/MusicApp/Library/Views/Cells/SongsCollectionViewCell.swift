@@ -11,6 +11,8 @@ final class SongsCollectionViewCell: UICollectionViewCell {
     
     static let id = "SongsCell"
     
+    // MARK: - Views
+    
     private lazy var songsLayerView: UIView = {
         let songsLayerView = UIView()
         
@@ -44,7 +46,7 @@ final class SongsCollectionViewCell: UICollectionViewCell {
         return songsLayerBorderView
     }()
     
-    private var songsImageView: UIImageView = {
+    private lazy var songsImageView: UIImageView = {
         let songsImageView = UIImageView()
         
         songsImageView.layer.cornerRadius = 15.0
@@ -54,6 +56,8 @@ final class SongsCollectionViewCell: UICollectionViewCell {
         
         return songsImageView
     }()
+    
+    // MARK: - Initialization
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -71,13 +75,17 @@ final class SongsCollectionViewCell: UICollectionViewCell {
         configureCell()
     }
     
-    private func configureCell() {
-        addSubviews()
-        configureLayout()
-    }
+    // MARK: - Public Methods
     
     func updateData(song: Song) {
         self.songsImageView.image = song.image
+    }
+    
+    // MARK: - Private Methods
+    
+    private func configureCell() {
+        addSubviews()
+        configureLayout()
     }
 }
 

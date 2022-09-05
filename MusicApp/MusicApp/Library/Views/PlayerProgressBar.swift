@@ -10,6 +10,8 @@ import UIKit
 
 final class PlayerProgressBar: UIView {
     
+    // MARK: - Views
+    
     private lazy var timeStackView: UIStackView = {
         let timeStackView = UIStackView()
         
@@ -26,7 +28,7 @@ final class PlayerProgressBar: UIView {
         elapsedTimeLabel.minimumScaleFactor = 0.5
         elapsedTimeLabel.adjustsFontSizeToFitWidth = true
         elapsedTimeLabel.font = .systemFont(ofSize: 15, weight: .regular)
-        elapsedTimeLabel.textAlignment = .right
+        elapsedTimeLabel.textAlignment = .left
         elapsedTimeLabel.textColor = .white
         elapsedTimeLabel.text = "00:00"
         
@@ -40,7 +42,7 @@ final class PlayerProgressBar: UIView {
         remainingTimeLabel.minimumScaleFactor = 0.5
         remainingTimeLabel.adjustsFontSizeToFitWidth = true
         remainingTimeLabel.font = .systemFont(ofSize: 15, weight: .regular)
-        elapsedTimeLabel.textAlignment = .left
+        remainingTimeLabel.textAlignment = .right
         remainingTimeLabel.textColor = .white
         remainingTimeLabel.text = "00:00"
         
@@ -52,9 +54,12 @@ final class PlayerProgressBar: UIView {
         
         slider.thumbTintColor = .customPurple
         slider.tintColor = .customPurple
+        slider.isUserInteractionEnabled = false
         
         return slider
     }()
+    
+    // MARK: - Initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -72,25 +77,28 @@ final class PlayerProgressBar: UIView {
         configureProgressBar()
     }
     
-    private func configureProgressBar() {
-        setupAppearance()
-        addSubviews()
-        configureLayout()
-    }
+    // MARK: - Public Methods
     
     func updateData(songDuration: Int, playingTime: Int) {
         elapsedTimeLabel.text = playingTime.getTimerComponentsString()
         remainingTimeLabel.text = (songDuration - playingTime).getTimerComponentsString()
+        
+        slider.maximumValue = CFloat(songDuration)
+        slider.minimumValue = 0.0
+        slider.value = CFloat(playingTime)
+    }
+    
+    // MARK: - Private Methods
+    
+    private func configureProgressBar() {
+        addSubviews()
+        configureLayout()
     }
 }
 
 // MARK: - Appearance Methods
 
 private extension PlayerProgressBar {
-    func setupAppearance() {
-        //view.backgroundColor = .black
-    }
-    
     func addSubviews() {
         addSubview(slider)
         

@@ -9,16 +9,14 @@ import UIKit
 
 class MusicPlayerViewController: UIViewController {
     
-    // MARK: - Private properties
+    // MARK: - Private Properties
     
     private let viewModel: MusicPlayerViewModel = MusicPlayerViewModel()
     
     private var currentCell = 0
     
     private lazy var songsCollectionViewHeight = view.frame.height / 3
-    
     private lazy var songsCollectionViewSideInset: CGFloat = view.frame.width * 0.1
-    
     private lazy var songsCollectionViewFrameSpacing = (view.bounds.width - songsCollectionViewHeight) / 2
     
     // MARK: - Views
@@ -152,13 +150,14 @@ class MusicPlayerViewController: UIViewController {
         updateCurrentSongData(index: currentCell)
     }
     
-    //
+    // MARK: - Private Methods
     
     private func updateCurrentSongData(index: Int) {
-        guard let songData = viewModel.songsData?[index] else {
-            // stop music!
+        guard viewModel.songsData?.count ?? 0 != 0, let songData = viewModel.songsData?[index] else {
+            viewModel.stopPlayingAudio()
             songNameLabel.text = ""
             artistNameLabel.text = ""
+            updatePlayerProgressBar(songDuration: TimeInterval(), playingTime: 0)
             return
         }
         
@@ -331,6 +330,8 @@ private extension MusicPlayerViewController {
     }
     
     func handlePlayButtonTouch() {
+        guard viewModel.currentAudioPath != nil else { return }
+        
         let isPlaying = viewModel.audioPlayer?.isPlaying ?? false
         playButton.setImage(isPlaying ? UIImage(systemName: "play.fill") : UIImage(systemName: "pause.fill"), for: .normal)
         viewModel.playAudio()
