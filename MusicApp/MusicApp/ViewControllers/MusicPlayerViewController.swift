@@ -224,7 +224,7 @@ private extension MusicPlayerViewController {
             playerProgressBar.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             playerProgressBar.topAnchor.constraint(equalTo: artistNameLabel.bottomAnchor, constant: view.frame.height * 0.02),
             playerProgressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: view.frame.width / 25),
-            playerProgressBar.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.07)
+            playerProgressBar.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.09)
         ])
         
         playerButtonsStack.translatesAutoresizingMaskIntoConstraints = false

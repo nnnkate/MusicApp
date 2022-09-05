@@ -26,6 +26,7 @@ final class PlayerProgressBar: UIView {
         elapsedTimeLabel.minimumScaleFactor = 0.5
         elapsedTimeLabel.adjustsFontSizeToFitWidth = true
         elapsedTimeLabel.font = .systemFont(ofSize: 15, weight: .regular)
+        elapsedTimeLabel.textAlignment = .right
         elapsedTimeLabel.textColor = .white
         elapsedTimeLabel.text = "00:00"
         
@@ -39,6 +40,7 @@ final class PlayerProgressBar: UIView {
         remainingTimeLabel.minimumScaleFactor = 0.5
         remainingTimeLabel.adjustsFontSizeToFitWidth = true
         remainingTimeLabel.font = .systemFont(ofSize: 15, weight: .regular)
+        elapsedTimeLabel.textAlignment = .left
         remainingTimeLabel.textColor = .white
         remainingTimeLabel.text = "00:00"
         
@@ -109,7 +111,7 @@ private extension PlayerProgressBar {
         timeStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             timeStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            timeStackView.topAnchor.constraint(equalTo: self.centerYAnchor),
+            timeStackView.topAnchor.constraint(equalTo: self.centerYAnchor, constant: 10),
             timeStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             timeStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])

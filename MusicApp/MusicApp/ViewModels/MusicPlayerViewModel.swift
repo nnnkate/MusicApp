@@ -28,7 +28,12 @@ final class MusicPlayerViewModel: NSObject {
     weak var delegate: MusicPlayerViewModelDelegate?
     
     private(set) var audioPlayer: AVAudioPlayer?
-    private(set) var currentAudioPath: URL?
+    private(set) var currentAudioPath: URL? {
+        didSet {
+            newAudio = true
+        }
+    }
+    private(set) var newAudio = true
     
     let songsData: [Song]? = [Song(name: "Cut The Line",
                                    fileName: "Papa_Roach_-_Cut_The_Line_",
@@ -72,12 +77,13 @@ extension MusicPlayerViewModel: MusicPlayerViewModelProtocol {
         audioPlayer?.delegate = self
 
         audioPlayer?.prepareToPlay()
+        delegate?.updatePlayerProgressBar(songDuration: audioPlayer?.duration, playingTime: currentTimerValue)
     }
     
     func playAudio() {
-        guard let audioIsPlaying = audioPlayer?.isPlaying else { return }
+        guard let isPlaying = audioPlayer?.isPlaying else { return }
         
-        if audioIsPlaying {
+        if isPlaying {
             stopPlayingAudio()
             return
         }
@@ -85,13 +91,14 @@ extension MusicPlayerViewModel: MusicPlayerViewModelProtocol {
         startPlayingAudio()
     }
     
-    func continuePlayback(_ play: Bool) {
-        if play {
+    func continuePlayback(_ isPlaying: Bool) {
+        if isPlaying {
             startPlayingAudio()
             return
         }
         
         stopPlayingAudio()
+        delegate?.updatePlayerProgressBar(songDuration: audioPlayer?.duration, playingTime: currentTimerValue)
     }
     
     private func startPlayingAudio() {
@@ -109,17 +116,26 @@ extension MusicPlayerViewModel: MusicPlayerViewModelProtocol {
 
 extension MusicPlayerViewModel {
     func createTimer() {
-        if timer == nil {
-            let timer = Timer(timeInterval: 1.0,
-                              target: self,
-                              selector: #selector(updateTimer),
-                              userInfo: nil,
-                              repeats: true)
-            RunLoop.current.add(timer, forMode: .common)
-            timer.tolerance = 0.1
-          
-            self.timer = timer
-       }
+        if timer != nil {
+            cancelTimer()
+        }
+        
+        if newAudio {
+            currentTimerValue = 0
+            newAudio = false
+        }
+            
+        delegate?.updatePlayerProgressBar(songDuration: audioPlayer?.duration, playingTime: currentTimerValue)
+        
+        let timer = Timer(timeInterval: 1.0,
+                          target: self,
+                          selector: #selector(updateTimer),
+                          userInfo: nil,
+                          repeats: true)
+        RunLoop.current.add(timer, forMode: .common)
+        timer.tolerance = 0.1
+      
+        self.timer = timer
     }
     
     @objc func updateTimer() {
@@ -130,7 +146,9 @@ extension MusicPlayerViewModel {
     func cancelTimer() {
         timer?.invalidate()
         timer = nil
-        currentTimerValue = 0
+        if newAudio {
+            currentTimerValue = 0
+        }
     }
 }
 
