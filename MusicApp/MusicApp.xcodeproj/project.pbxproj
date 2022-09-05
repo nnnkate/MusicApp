@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		85CAC47E28C61D4800BBC1FB /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85CAC47D28C61D4800BBC1FB /* Int+Extensions.swift */; };
 		85F18D6728C28292008C0CA7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F18D6628C28292008C0CA7 /* AppDelegate.swift */; };
 		85F18D6928C28292008C0CA7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F18D6828C28292008C0CA7 /* SceneDelegate.swift */; };
 		85F18D6B28C28292008C0CA7 /* MusicPlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F18D6A28C28292008C0CA7 /* MusicPlayerViewController.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		85CAC47D28C61D4800BBC1FB /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		85F18D6328C28292008C0CA7 /* MusicApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85F18D6628C28292008C0CA7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		85F18D6828C28292008C0CA7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				85F18D8728C35383008C0CA7 /* UIColor+Extensions.swift */,
+				85CAC47D28C61D4800BBC1FB /* Int+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				85F18D6728C28292008C0CA7 /* AppDelegate.swift in Sources */,
 				85F18D8E28C371A4008C0CA7 /* PlayerProgressBar.swift in Sources */,
 				85F18D8628C31230008C0CA7 /* SongsCollectionViewCell.swift in Sources */,
+				85CAC47E28C61D4800BBC1FB /* Int+Extensions.swift in Sources */,
 				85F18D6928C28292008C0CA7 /* SceneDelegate.swift in Sources */,
 				85F18D8A28C35CB5008C0CA7 /* Artist.swift in Sources */,
 				85F18D8C28C36387008C0CA7 /* MusicPlayerViewModel.swift in Sources */,

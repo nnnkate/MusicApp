@@ -75,6 +75,11 @@ final class PlayerProgressBar: UIView {
         addSubviews()
         configureLayout()
     }
+    
+    func updateData(songDuration: Int, playingTime: Int) {
+        elapsedTimeLabel.text = playingTime.getTimerComponentsString()
+        remainingTimeLabel.text = (songDuration - playingTime).getTimerComponentsString()
+    }
 }
 
 // MARK: - Appearance Methods

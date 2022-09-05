@@ -311,8 +311,8 @@ extension MusicPlayerViewController: UICollectionViewDelegate {
 // MARK: - MusicPlayerViewModelDelegate
 
 extension MusicPlayerViewController: MusicPlayerViewModelDelegate {
-    func updatePlayerProgressBar() {
-        print("updatePlayerProgressBar")
+    func updatePlayerProgressBar(songDuration: TimeInterval?, playingTime: Int) {
+        playerProgressBar.updateData(songDuration: Int(songDuration ?? 0), playingTime: playingTime)
     }
 }
 

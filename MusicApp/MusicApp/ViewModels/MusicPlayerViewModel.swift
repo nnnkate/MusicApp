@@ -20,7 +20,7 @@ protocol MusicPlayerViewModelProtocol {
 }
 
 protocol MusicPlayerViewModelDelegate: AnyObject {
-    func updatePlayerProgressBar()
+    func updatePlayerProgressBar(songDuration: TimeInterval?, playingTime: Int)
 }
 
 final class MusicPlayerViewModel: NSObject {
@@ -44,6 +44,7 @@ final class MusicPlayerViewModel: NSObject {
                                    artist: [Artist(name: "Mötley Crüe")])]
     
     private(set)var timer: Timer?
+    private(set)var currentTimerValue: Int = 0
 }
 
 extension MusicPlayerViewModel: AVAudioPlayerDelegate {
@@ -122,12 +123,14 @@ extension MusicPlayerViewModel {
     }
     
     @objc func updateTimer() {
-        delegate?.updatePlayerProgressBar()
+        currentTimerValue += 1
+        delegate?.updatePlayerProgressBar(songDuration: audioPlayer?.duration, playingTime: currentTimerValue)
     }
     
     func cancelTimer() {
         timer?.invalidate()
         timer = nil
+        currentTimerValue = 0
     }
 }
 
